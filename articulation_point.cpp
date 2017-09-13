@@ -1,7 +1,7 @@
 #include<bits/stdc++.h>
 using namespace std;
 /*
-des[] is used to store the time at which a node is discoverd first
+desc[] is used to store the time at which a node is discoverd first
 low[] is used to store the smallest time it can be reached
 time -- it is used to store the current time
 child -- it is used to count the number of child of a node
