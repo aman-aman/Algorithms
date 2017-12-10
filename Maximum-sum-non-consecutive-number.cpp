@@ -3,18 +3,8 @@ using namespace std;
 //aman kumar jha
 int main()
 {
-    int t;
-    cin>>t;
-    while(t--)
-    {
-        int n;
-        cin>>n;
-        int a[n];
-
-        for(int i=0;i<n;i++)
-        {
-            cin>>a[i];
-        }
+        int n=6;
+        int a[6] = {5, 5, 10, 100, 10, 5};
         int exc=0,inc=a[0];
         for(int i=1;i<n;i++)
         {
@@ -23,6 +13,5 @@ int main()
             exc=exl;
         }
 
-        cout<<max(exc,inc)<<"\n";
-    }
+        cout<<"Maximum sum of non consecutive element: "<<max(exc,inc)<<"\n";
 }
