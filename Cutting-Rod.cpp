@@ -14,7 +14,6 @@ int maxprofit(int a[],int n)
         }
         dp[i]=val;
     }
-
     return dp[n];
 }
 int main()
