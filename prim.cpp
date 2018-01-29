@@ -1,48 +1,80 @@
+//aman kumar jha
 #include<bits/stdc++.h>
 using namespace std;
-vector<list<pair<int,int> > >adj(100);
-typedef pair<int,int> p;
-//aman kumar jha
-void prim(int n)
+const int MAX = 1e4 + 5;
+typedef pair<long long, int> PII;
+bool marked[MAX];
+vector <PII> adj[MAX];
+
+long long prim(int x,int n)
 {
-    priority_queue<p,vector <p>,greater<p> >pq;
-    int src = 0;
-    vector<int>key(n, INT_MAX);
-    vector<int>parent(n);
-    vector<int>mst(n, -1);
-    pq.push(make_pair(0, src));
-    key[src]=0;
-    while (!pq.empty())
+    priority_queue<PII, vector<PII>, greater<PII> > Q;
+    int y;
+    long long minimumCost = 0;
+    PII p;
+    Q.push(make_pair(0, x));
+    vector<int> parent(n,-1);
+
+    while(!Q.empty())
     {
-        int u=pq.top().second;
-        pq.pop();
-        mst[u]=1;
-        for (list<p>::iterator i=adj[u].begin();i!= adj[u].end();++i)
+        // Select the edge with minimum weight
+        p = Q.top();
+        Q.pop();
+        x = p.second;
+        // Checking for cycle
+        if(marked[x] == true)
+            continue;
+        minimumCost += p.first;
+        marked[x] = true;
+        for(int i = 0;i < adj[x].size();++i)
         {
-            int v=(*i).first;
-            int weight=(*i).second;
-            if (mst[v]==-1&&key[v]>weight)
-            {
-                key[v]=weight;
-                pq.push(make_pair(key[v], v));
-                parent[v]=u;
-                //cout<<"aman\n";
-            }
+            y = adj[x][i].second;
+            if(marked[y] == false)
+                {
+                    Q.push(adj[x][i]);
+                    parent[y]=x;
+                }
         }
     }
-    for (int i=1;i<n;++i)
-        printf("%d->%d\n", parent[i], i);
+    for(int i=1;i<n;i++)
+        cout<<parent[i]<<"-"<<i<<"\n";
+    return minimumCost;
 }
 
 int main()
 {
-    int n,m,u,v,w;
-    cin>>n>>m;
-    for(int i=0;i<m;i++)
+    int nodes, edges, x, y;
+    long long weight, minimumCost;
+    cin >> nodes >> edges;
+    for(int i = 0;i < edges;++i)
     {
-        cin>>u>>v>>w;
-        adj[u].push_back(make_pair(v,w));
-        adj[v].push_back(make_pair(u,w));
+        cin >> x >> y >> weight;
+        adj[x].push_back(make_pair(weight, y));
+        adj[y].push_back(make_pair(weight, x));
     }
-    prim(n);
+    // Selecting 1 as the starting node
+    minimumCost = prim(0,nodes);
+    cout << minimumCost << endl;
+    return 0;
 }
+
+/*
+Input
+nds edges
+9 14
+u v w
+0 1 4
+0 7 8
+1 2 8
+1 7 11
+2 3 7
+2 8 2
+2 5 4
+3 4 9
+3 5 14
+4 5 10
+5 6 2
+6 7 1
+6 8 6
+7 8 7
+*/
