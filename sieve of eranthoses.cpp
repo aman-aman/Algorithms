@@ -13,7 +13,7 @@ void seive(int n)
                 prime[i] = false;
         }
     }
-    for (int p=2; p<=n; p++)
+    for (int p=2;p<=n; p++)
        if (prime[p])
           cout << p << " ";
 }
